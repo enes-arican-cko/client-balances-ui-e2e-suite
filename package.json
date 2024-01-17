@@ -1,0 +1,19 @@
+{
+  "name": "dashboard-e2e-suite",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justin-thomas-cko/dashboard-e2e-suite.git"
+  },
+  "homepage": "https://github.com/justin-thomas-cko/dashboard-e2e-suite#readme",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.1",
+    "@types/node": "^20.10.6"
+  },
+  "dependencies": {
+    "winston": "^3.11.0"
+  }
+}

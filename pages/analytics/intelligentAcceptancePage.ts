@@ -1,0 +1,1 @@
+//TODO: implement the locators and helpers to handle everything on the "Intelligent acceptance" page on Dashboard
