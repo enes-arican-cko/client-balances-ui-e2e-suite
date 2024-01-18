@@ -1,4 +1,6 @@
 {
+  "env": "sbox",
+  "baseUrl": "https://dashboard.sandbox.checkout.com/",
   "login": {
     "username": "compass-admin.sbox-auto@b7ocprkt.mailosaur.net",
     "password": "Not4ManualUse!"

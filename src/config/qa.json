@@ -1,4 +1,6 @@
 {
+  "env": "qa",
+  "baseUrl": "https://identity-qa.ckotech.co/",
     "login": {
       "username": "compass-admin.qa-auto@b7ocprkt.mailosaur.net",
       "password": "Not4ManualUse!"
