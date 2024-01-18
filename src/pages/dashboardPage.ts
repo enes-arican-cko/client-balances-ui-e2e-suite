@@ -7,7 +7,7 @@ export enum DashboardPages {
     NEW_REPORT = 'New report',
     MANAGE_SCHEDULES = 'Manage schedules',
     ANALYTICS = 'Analytics',
-} 
+}
 
 export enum LocatorType {
     "LINK" = "link",
@@ -27,7 +27,7 @@ export class DashboardPage {
     }
 
     // navigate to diff supported pages within dashboard
-    async navigateTo(targetPage: DashboardPages, locator=LocatorType.LINK) {
+    async navigateTo(targetPage: DashboardPages, locator = LocatorType.LINK) {
         logger.info(`👉 Navigating to the: "${targetPage}" page`)
         if (locator == LocatorType.BUTTON) {
             await this.page.getByRole("button", { name: `${targetPage}` }).click()

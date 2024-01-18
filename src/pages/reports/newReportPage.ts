@@ -4,8 +4,8 @@ import { AllReportsPage } from './reportsPage';
 import { logger } from '../../config/logger';
 
 export enum ReportType {
-    PAYMENTS = "Payments",
-    DISPUTES = "Disputes"
+  PAYMENTS = "Payments",
+  DISPUTES = "Disputes"
 }
 
 export class NewReportPage extends AllReportsPage {
