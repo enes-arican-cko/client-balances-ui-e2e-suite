@@ -40,7 +40,8 @@ jobs:
       - name: ⚙️ Install Playwright Browsers
         run: |
           echo "::group::npx playwright install chromium"
-          npx playwright install chromium --with-deps
+          echo "Using Playwright $(npx playwright --version)" && echo "*******************************"
+          npx playwright install --with-deps chromium
           echo "::endgroup::"
 
       - name: 🚀 Run Playwright tests
