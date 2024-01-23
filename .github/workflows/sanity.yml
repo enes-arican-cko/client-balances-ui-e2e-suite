@@ -1,5 +1,5 @@
-name: Dashboard E2E Playwright Tests
-run-name: Dashboard E2E Playwright Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
+name: E2E Sanity Tests
+run-name: Sanity Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
   schedule:
     - cron: "0 6 * * 1-5" #scheduled to run on every weekday at 6 AM
@@ -17,7 +17,7 @@ jobs:
 
   sanity-tests:
     timeout-minutes: 10
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
@@ -50,8 +50,8 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: merged-reports
-          path: reports/
+          name: blob-reports
+          path: blob-reports/
           retention-days: 30
 
   merge-reports-and-upload:
@@ -74,19 +74,19 @@ jobs:
       - name: ⚙️ Install dependencies
         run: |
           echo "::group::npm install"
-          npm ci
+          npm i
           echo "::endgroup::"
 
        # we now download the reports uploaded previously to merge them and create one single html report
       - name: Download blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v3
         with:
-          name: merged-reports # name of the file stored as artifact (as uploaded at the previous job)
-          path: downloaded-merged-reports # name of the folder where the download will be saved
+          name: blob-reports # name of the file stored as artifact (as uploaded at the previous job)
+          path: downloaded-blob-reports # name of the folder where the download will be saved
 
       # Playwright will generate a report and store it inside a folder called '/playwright-report'
       - name: Merge the reports into one single HTML Report
-        run: npx playwright merge-reports --reporter html ./downloaded-merged-reports
+        run: npx playwright merge-reports --reporter html ./downloaded-blob-reports
 
       # - name: Upload full html report to artifacts for history
       #   if: always()
