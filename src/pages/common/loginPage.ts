@@ -30,7 +30,6 @@ export class LoginPage extends DashboardPage {
     async loginViaForm() {
         await this.populateLoginForm();
         await this.continueBtnLocator.click()
-        await this.cookiesBtnLocator.click()
         logger.info(`🎊 Logged in successfully`)
     }
 }

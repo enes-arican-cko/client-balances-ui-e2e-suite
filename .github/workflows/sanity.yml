@@ -75,8 +75,7 @@ jobs:
       - name: ⚙️ Install dependencies
         run: |
           echo "::group::npm install"
-          echo "Github workspace: $(github.workspace)"
-          cd $(github.workspace)
+          cd $(GITHUB.WORKSPACE)
           npm i
           echo "::endgroup::"
 
