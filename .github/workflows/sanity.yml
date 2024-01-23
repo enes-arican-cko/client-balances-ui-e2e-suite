@@ -75,7 +75,7 @@ jobs:
       - name: ⚙️ Install dependencies
         run: |
           echo "::group::npm install"
-          cd $(GITHUB.WORKSPACE)
+          cd $(GITHUB.WORKSPACE)/dashboard-e2e-suite
           npm i
           echo "::endgroup::"
 
