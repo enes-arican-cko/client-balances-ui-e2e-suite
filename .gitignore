@@ -134,3 +134,4 @@ dist
 /playwright/.cache/
 
 .history/
+sample.spec.ts

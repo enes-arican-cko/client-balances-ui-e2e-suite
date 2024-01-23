@@ -1,0 +1,47 @@
+name: Dashboard E2E Playwright Tests
+run-name: Dashboard E2E Playwright Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
+on:
+    schedule:
+      - cron: '0 6 * * 1-5' #scheduled to run on every weekday at 6 AM
+    workflow_dispatch:
+      inputs:
+        env:
+          description: 'Env'
+          required: true
+          default: 'sbox'
+          type: choice
+          options:
+            - 'qa'
+            - 'sbox'
+jobs:
+  sanity-tests:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+        - name: ⬇️ Checkout repository
+          uses: actions/checkout@v4
+
+        - name: ⚙️ Setup node
+          uses: actions/setup-node@v3
+          with:
+            node-version: 18
+
+        - name: ⚙️ Install dependencies
+          run: |
+            echo "::group::npm install"
+            npm ci
+            echo "::endgroup::"
+
+        - name: ⚙️ Install Playwright Browsers
+          run: npx playwright install chromium --with-deps
+
+        - name: 🚀 Run Playwright tests
+          run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test && npm run show-report
+
+        - name: ⬆️ Uploading artifact
+          uses: actions/upload-artifact@v3
+          if: always()
+          with:
+            name: playwright-report
+            path: playwright-report/
+            retention-days: 30

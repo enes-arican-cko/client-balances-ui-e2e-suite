@@ -2,7 +2,26 @@
   "name": "dashboard-e2e-suite",
   "version": "1.0.0",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "sbx-test": "TEST_ENV=sbox npm run test",
+    "show-report": "npx playwright show-report",
+    
+    "test:ui": "npx playwright test --ui",
+    "sbx-test:ui": "TEST_ENV=sbox npm run test:ui",
+    
+    "test:headed": "npx playwright test --headed",
+    "sbx-test:headed": "TEST_ENV=sbox npm run test:headed",
+    
+    "test:debug": "npx playwright test --debug",
+    "sbx-test:debug": "TEST_ENV=sbox npm run test:debug",
+    
+    "test:trace": "npx playwright test --trace on",
+    "sbx-test:trace": "TEST_ENV=sbox npm run test:trace",
+
+    "test-with-report": "npx playwright test && npm run show-report",
+    "sbx-test-with-report": "TEST_ENV=sbox npm run test-with-report"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/justin-thomas-cko/dashboard-e2e-suite.git"

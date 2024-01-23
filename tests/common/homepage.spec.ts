@@ -10,7 +10,7 @@ test.beforeAll(async ({ dashboardPage }) => {
   await loginPage.loginViaForm()
 });
 
-test('Sanity: Login and validate reporting components', async ({ }) => {
+test('Sanity: Login and validate homepage components', async ({ }) => {
   const allReportsPage = new AllReportsPage(page);
   await allReportsPage.validatePresenceOfAllLocators()
   logger.info(`✅ Validating all the critical elements on the "All reports" page`);
