@@ -1,47 +1,109 @@
 name: Dashboard E2E Playwright Tests
 run-name: Dashboard E2E Playwright Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
-    schedule:
-      - cron: '0 6 * * 1-5' #scheduled to run on every weekday at 6 AM
-    workflow_dispatch:
-      inputs:
-        env:
-          description: 'Env'
-          required: true
-          default: 'sbox'
-          type: choice
-          options:
-            - 'qa'
-            - 'sbox'
+  schedule:
+    - cron: "0 6 * * 1-5" #scheduled to run on every weekday at 6 AM
+  workflow_dispatch:
+    inputs:
+      env:
+        description: "Env"
+        required: true
+        default: "sbox"
+        type: choice
+        options:
+          - "qa"
+          - "sbox"
 jobs:
+
   sanity-tests:
-    timeout-minutes: 60
+    timeout-minutes: 10
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1/2, 2/2]
     steps:
-        - name: ⬇️ Checkout repository
-          uses: actions/checkout@v4
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
 
-        - name: ⚙️ Setup node
-          uses: actions/setup-node@v3
-          with:
-            node-version: 18
+      - name: ⚙️ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-        - name: ⚙️ Install dependencies
-          run: |
-            echo "::group::npm install"
-            npm ci
-            echo "::endgroup::"
+      - name: ⚙️ Install dependencies
+        run: |
+          echo "::group::npm install"
+          npm ci
+          echo "::endgroup::"
 
-        - name: ⚙️ Install Playwright Browsers
-          run: npx playwright install chromium --with-deps
+      - name: ⚙️ Install Playwright Browsers
+        run: |
+          echo "::group::npx playwright install chromium"
+          npx playwright install chromium --with-deps
+          echo "::endgroup::"
 
-        - name: 🚀 Run Playwright tests
-          run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test && npm run show-report
+      - name: 🚀 Run Playwright tests
+        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test reports/reporting.spec.ts --shard ${{matrix.shard}}
 
-        - name: ⬆️ Uploading artifact
-          uses: actions/upload-artifact@v3
-          if: always()
-          with:
-            name: playwright-report
-            path: playwright-report/
-            retention-days: 30
+      - name: ⬆️ Uploading artifact
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: merged-reports
+          path: reports/
+          retention-days: 30
+
+  merge-reports-and-upload:
+    if: always()
+    needs: [sanity-tests]
+    runs-on: ubuntu-latest
+    outputs:
+      timestamp: ${{ steps.timestampid.outputs.timestamp }}
+
+    steps:
+      - name: Set a timestamp
+        id: timestampid
+        run: echo "timestamp=$(date --utc +%d%m%Y_%H%M%SZ)" >> "$GITHUB_OUTPUT"
+
+      - name: ⚙️ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      
+      - name: ⚙️ Install dependencies
+        run: |
+          echo "::group::npm install"
+          npm ci
+          echo "::endgroup::"
+
+       # we now download the reports uploaded previously to merge them and create one single html report
+      - name: Download blob reports from GitHub Actions Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: merged-reports # name of the file stored as artifact (as uploaded at the previous job)
+          path: downloaded-merged-reports # name of the folder where the download will be saved
+
+      # Playwright will generate a report and store it inside a folder called '/playwright-report'
+      - name: Merge the reports into one single HTML Report
+        run: npx playwright merge-reports --reporter html ./downloaded-merged-reports
+
+      # - name: Upload full html report to artifacts for history
+      #   if: always()
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: playwright-report-${{ steps.timestampid.outputs.timestamp }} # name of the file you want to have once its uploaded
+      #     path: playwright-report # path where the reports are, from where to take the files
+      #     retention-days: 14
+
+      - name: Push the new files to github pages
+        # This will create a separate branch called gh-pages where it will store only reports. And from where it will push all future changes 
+        # to github pages. Having a separate branch will keep the reports and changes commits separate to your main/master
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./playwright-report # from what folder to take files. It takes only contents
+          destination_dir: ${{ steps.timestampid.outputs.timestamp }} # a sub-directory where to publish to avoid overwriting other reports
+          
+      - name: Write URL in summary
+        run: echo "### Test results (link available after 20 secs) - https://${{ github.repository_owner }}.github.io/dashboard-e2e-suite/${{ steps.timestampid.outputs.timestamp }}/" >> $GITHUB_STEP_SUMMARY
