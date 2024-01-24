@@ -21,6 +21,8 @@ export class AllReportsPage extends DashboardPage {
   }
 
   async validatePresenceOfAllLocators() {
+    await this.manageSchedulesLinkLocator.focus()
+    
     await expect.soft(this.manageSchedulesLinkLocator).toBeVisible();
     await expect.soft(this.headerTextLocator).toBeVisible();
     await expect.soft(this.reportsFilterLocator).toBeVisible();
