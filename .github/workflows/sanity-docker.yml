@@ -13,11 +13,16 @@ on:
         options:
           - "qa"
           - "sbox"
+
+env:
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1 # Skip downloading during yarn install
+  PLAYWRIGHT_BROWSERS_PATH: 0 # Places binaries to node_modules/@playwright/test
+
 jobs:
   sanity-tests:
     name: 🧪 Sanity Test
     timeout-minutes: 10
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.41.1-jammy
     strategy:
@@ -33,10 +38,11 @@ jobs:
         with:
           node-version: 18
 
-      - name: ⚙️ Install dependencies
+      - name: ⚙️ Install dependencies (including playwright)
         run: |
-          echo "::group::npm install"
+          echo "::group::npm install && npx playwright install"
           npm ci
+          npx playwright install --with-deps chromium
           echo "::endgroup::"
 
       - name: 🚀 Run Playwright tests
