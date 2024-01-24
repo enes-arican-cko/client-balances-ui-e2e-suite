@@ -34,9 +34,9 @@ jobs:
         with:
           node-version: 18
 
-      - name: ⚙️ Install dependencies (including playwright)
+      - name: ⚙️ Install dependencies
         run: |
-          echo "::group::npm install && npx playwright install"
+          echo "::group::npm clean install"
           npm ci
           echo "::endgroup::"
         env:
