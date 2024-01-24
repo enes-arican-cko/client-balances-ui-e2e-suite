@@ -14,15 +14,6 @@ on:
           - "qa"
           - "sbox"
 
-env:
-  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1 # Skip downloading during yarn install
-
-  #  Download Playwright(PW) Browsers for specific-version
-  #  Each version of Playwright needs specific versions of Chromium Webkit and Firefox so defining version is necessary
-  PLAYWRIGHT_BROWSERS_PATH: /usr/lib/playwright npm install playwright-chromium@1.41.0 # Places binaries to node_modules/@playwright/test
-
-
-
 jobs:
   sanity-tests:
     name: 🧪 Sanity Test
@@ -48,6 +39,9 @@ jobs:
           echo "::group::npm install && npx playwright install"
           npm ci
           echo "::endgroup::"
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1 # Skip downloading during yarn install
+          PLAYWRIGHT_BROWSERS_PATH: /usr/lib/playwright npm install playwright-chromium@1.41.0 # Places binaries to node_modules/@playwright/test
 
       - name: 🚀 Run Playwright tests
         run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test reports/reporting.spec.ts --shard ${{matrix.shard}}
