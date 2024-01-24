@@ -29,7 +29,7 @@
   "homepage": "https://github.com/justin-thomas-cko/dashboard-e2e-suite#readme",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.40.1",
+    "@playwright/test": "^1.41.0",
     "@types/node": "^20.10.6"
   },
   "dependencies": {
