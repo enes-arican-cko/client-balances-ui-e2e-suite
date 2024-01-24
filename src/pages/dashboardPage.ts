@@ -34,6 +34,8 @@ export class DashboardPage {
         } else {
             await this.page.getByRole("link", { name: `${targetPage}` }).click();
         }
+
+        await this.page.waitForLoadState()
     }
 }
 
