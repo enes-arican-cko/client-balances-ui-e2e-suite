@@ -54,7 +54,7 @@ const defaultConfig:  PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 3 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: process.env.CI ? 'blob' : 'html',
 
   /* Global setup definition*/
   //globalSetup: require.resolve('./src/config/setup/global-setup.ts'),

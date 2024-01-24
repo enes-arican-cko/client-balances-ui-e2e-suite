@@ -40,9 +40,12 @@ export class NewReportPage extends AllReportsPage {
   }
 
   async validatePresenceOfAllLocators() {
+    logger.info(`✅ Validating all locators`);
+
+    await this.headingTextLocator.focus()
+    await expect.soft(this.generateReportBtnLocator).toBeVisible();
     await expect.soft(this.headingTextLocator).toBeVisible();
     await expect.soft(this.configureDetailsSectionLocator).toBeVisible();
-    await expect.soft(this.generateReportBtnLocator).toBeVisible();
     await expect.soft(this.reportTypeLocator).toBeVisible();
     await expect.soft(this.accountLocator).toBeVisible();
     await expect.soft(this.generateNowLocator).toBeVisible();

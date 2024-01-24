@@ -1,4 +1,4 @@
-name: 🧪 E2E Sanity Tests
+name: 🧪 E2E Sanity Tests (Docker)
 run-name: Sanity Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
   schedule:
@@ -14,11 +14,12 @@ on:
           - "qa"
           - "sbox"
 jobs:
-
   sanity-tests:
     name: 🧪 Sanity Test
     timeout-minutes: 10
     runs-on: ubuntu-22.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.41.1-jammy
     strategy:
       fail-fast: false
       matrix:
@@ -38,15 +39,10 @@ jobs:
           npm ci
           echo "::endgroup::"
 
-      - name: ⚙️ Install Playwright Browsers
-        run: |
-          echo "::group::npx playwright install chromium"
-          echo "Using Playwright $(npx playwright --version)" && echo "*******************************"
-          npx playwright install --with-deps chromium
-          echo "::endgroup::"
-
       - name: 🚀 Run Playwright tests
         run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test reports/reporting.spec.ts --shard ${{matrix.shard}}
+        env:
+          HOME: /root
 
       - name: ⬆️ Uploading artifact
         uses: actions/upload-artifact@v3
@@ -67,12 +63,12 @@ jobs:
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v4
-  
+
       - name: ⚙️ Setup node
         uses: actions/setup-node@v4
         with:
           node-version: 18
-      
+
       - name: ⚙️ Install dependencies
         run: |
           echo "::group::npm install"
@@ -83,7 +79,7 @@ jobs:
         id: timestampid
         run: echo "timestamp=$(date --utc +%d%m%Y_%H%M%SZ)" >> "$GITHUB_OUTPUT"
 
-       # we now download the reports uploaded previously to merge them and create one single html report
+        # we now download the reports uploaded previously to merge them and create one single html report
       - name: ⬇️ Download blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v3
         with:
