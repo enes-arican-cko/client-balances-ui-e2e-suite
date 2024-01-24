@@ -135,3 +135,4 @@ dist
 
 .history/
 sample.spec.ts
+custom-html-report/index.html

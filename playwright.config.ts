@@ -54,7 +54,18 @@ const defaultConfig:  PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 10 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI ? 'blob' : 'html', 
+  reporter: process.env.CI ? 'blob' : [ ['html'], ['playwright-html', { 
+    testFolder: 'tests',
+    title: 'Dashboard E2E Tests HTML Report',
+    project: 'Project X',
+    release: '1.0.0',
+    testEnvironment: 'SBOX',
+    embedAssets: true,
+    embedAttachments: true,
+    outputFolder: 'custom-html-report',
+    minifyAssets: true,
+    startServer: true,
+  }]], 
 
   /* Global setup definition*/
   //globalSetup: require.resolve('./src/config/setup/global-setup.ts'),
@@ -64,6 +75,10 @@ const defaultConfig:  PlaywrightTestConfig = {
     // storageState: 'state.json',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    video: {
+      mode: 'on'
+    },
+    screenshot: 'on'
   },
 
   /* Configure projects for major browsers */

@@ -1,5 +1,5 @@
-name: 🧪 E2E Sanity Tests (Docker, no sharding)
-run-name: Sanity Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
+name: 🧪 E2E Smoke Tests (no sharding)
+run-name: Smoke Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
   schedule:
     - cron: "0 6 * * 1-5" #scheduled to run on every weekday at 6 AM
@@ -13,14 +13,11 @@ on:
         options:
           - "qa"
           - "sbox"
-
 jobs:
-  sanity-tests:
-    name: 🧪 Sanity Test
+  smoke-tests:
+    name: 🧪 Smoke Test
     timeout-minutes: 10
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.41.1-jammy
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
 
@@ -35,16 +32,16 @@ jobs:
 
       - name: ⚙️ Install dependencies
         run: |
-          echo "::group::npm clean install"
+          echo "::group::npm install"
           npm ci
+          echo "::endgroup::" 
+
+      - name: ⚙️ Install Playwright Browsers
+        run: |
+          echo "::group::npx playwright install chromium"
+          echo "Using Playwright $(npx playwright --version)" && echo "*******************************"
+          npx playwright install --with-deps chromium
           echo "::endgroup::"
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1 # Skip downloading during yarn install
-          # Download Playwright(PW) Browsers for specific-version. Each version of Playwright 
-          # needs specific versions of Chromium, Webkit and Firefox, so defining version is necessary.
-          # More details: https://gkushang.medium.com/playwright-failed-to-launch-browsers-how-to-solve-8b01d03fe5b9
-          # NOTE: browser version mentioned below should match the docker image version mentioned above: "container > image"
-          PLAYWRIGHT_BROWSERS_PATH: /usr/lib/playwright npm install playwright-chromium@1.41.0 
 
       - name: 🚀 Run Playwright tests
         run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/*"
@@ -60,7 +57,7 @@ jobs:
   merge-reports-and-upload:
     name: 🗒️ Publish Test Report
     if: always()
-    needs: [sanity-tests]
+    needs: [smoke-tests]
     runs-on: ubuntu-latest
     outputs:
       timestamp: ${{ steps.timestampid.outputs.timestamp }}
