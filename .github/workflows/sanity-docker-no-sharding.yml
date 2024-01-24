@@ -1,4 +1,4 @@
-name: 🧪 E2E Sanity Tests (Docker)
+name: 🧪 E2E Sanity Tests (Docker, no sharding)
 run-name: Sanity Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
   schedule:
