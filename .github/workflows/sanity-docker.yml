@@ -48,7 +48,7 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: /usr/lib/playwright npm install playwright-chromium@1.41.0 
 
       - name: 🚀 Run Playwright tests
-        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test --shard ${{matrix.shard}}
+        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test "tests/*" --shard ${{matrix.shard}}
 
       - name: ⬆️ Uploading artifact
         uses: actions/upload-artifact@v3
