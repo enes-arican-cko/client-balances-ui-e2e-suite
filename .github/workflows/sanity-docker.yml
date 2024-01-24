@@ -41,10 +41,14 @@ jobs:
           echo "::endgroup::"
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1 # Skip downloading during yarn install
-          PLAYWRIGHT_BROWSERS_PATH: /usr/lib/playwright npm install playwright-chromium@1.41.0 # Places binaries to node_modules/@playwright/test
+          # Download Playwright(PW) Browsers for specific-version. Each version of Playwright 
+          # needs specific versions of Chromium, Webkit and Firefox, so defining version is necessary.
+          # More details: https://gkushang.medium.com/playwright-failed-to-launch-browsers-how-to-solve-8b01d03fe5b9
+          # NOTE: browser version mentioned below should match the docker image version mentioned above: "container > image"
+          PLAYWRIGHT_BROWSERS_PATH: /usr/lib/playwright npm install playwright-chromium@1.41.0 
 
       - name: 🚀 Run Playwright tests
-        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test reports/reporting.spec.ts --shard ${{matrix.shard}}
+        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test --shard ${{matrix.shard}}
 
       - name: ⬆️ Uploading artifact
         uses: actions/upload-artifact@v3
