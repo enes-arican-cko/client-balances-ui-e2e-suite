@@ -41,8 +41,6 @@ jobs:
 
       - name: 🚀 Run Playwright tests
         run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test reports/reporting.spec.ts --shard ${{matrix.shard}}
-        env:
-          HOME: /root
 
       - name: ⬆️ Uploading artifact
         uses: actions/upload-artifact@v3
