@@ -1,5 +1,5 @@
-import { Locator, Page } from "@playwright/test";
-import { DashboardPage } from "../dashboardPage";
+import { Locator, Page, expect } from "@playwright/test";
+import { DashboardPage } from "../dashboard";
 import config from "../../../playwright.config";
 import { logger } from "../../config/logger";
 
@@ -31,5 +31,7 @@ export class LoginPage extends DashboardPage {
         await this.populateLoginForm();
         await this.continueBtnLocator.click()
         logger.info(`🎊 Logged in successfully`)
+        await expect(this.page.getByTestId('account-selector-button')).toBeVisible({timeout: 10000});
+        await this.page.waitForLoadState('domcontentloaded')
     }
 }

@@ -1,8 +1,8 @@
 import config from '../../../../playwright.config';
 import { logger } from '../../../../src/config/logger';
 import test, { page } from "../../../../src/fixtures/commonFixtures";
-import { LoginPage } from '../../../../src/pages/common/loginPage';
-import { NewReportPage, ReportType } from '../../../../src/pages/reports/newReportPage';
+import { LoginPage } from '../../../../src/pages/common/login';
+import { NewReportPage, ReportType } from '../../../../src/pages/reports/newReport';
 import { addCustomAnnotation } from '../../index';
 
 test.describe("@functional @reports", () => {

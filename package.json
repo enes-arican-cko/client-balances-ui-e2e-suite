@@ -15,7 +15,9 @@
     "test:trace": "npx playwright test --trace on",
     "sbx-test:trace": "TEST_ENV=sbox npm run test:trace",
     "test-with-report": "npx playwright test && npm run show-report",
-    "sbx-test-with-report": "TEST_ENV=sbox npm run test-with-report"
+    "sbx-test-with-report": "TEST_ENV=sbox npm run test-with-report",
+    "test:visual": "npx playwright test 'home-visual.spec.ts'",
+    "sbx-test:visual": "TEST_ENV=sbox npm run test:visual"
   },
   "repository": {
     "type": "git",

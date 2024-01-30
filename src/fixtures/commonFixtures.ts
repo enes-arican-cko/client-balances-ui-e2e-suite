@@ -1,5 +1,5 @@
 import { Page, test as base } from '@playwright/test';
-import { DashboardPage } from "../pages/dashboardPage";
+import { DashboardPage } from "../pages/dashboard";
 
 // custom fixtures.
 type CommonFixtures = {

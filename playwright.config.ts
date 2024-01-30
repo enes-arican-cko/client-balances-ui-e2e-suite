@@ -106,6 +106,12 @@ const defaultConfig: PlaywrightTestConfig = {
     //   use: { ...devices['Desktop Firefox'] },
     // }
   ],
+  expect: {
+    toHaveScreenshot: { 
+      maxDiffPixelRatio:0.1, 
+      maxDiffPixels: 100, 
+      threshold: 0.1},
+  }
 };
 
 // config object with default configuration and environment specific configuration

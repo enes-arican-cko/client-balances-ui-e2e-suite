@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { DashboardPages, LocatorType } from '../dashboardPage'
-import { AllReportsPage } from './reportsPage';
+import { DashboardPages, LocatorType } from '../dashboard'
+import { AllReportsPage } from './reports';
 import { logger } from '../../config/logger';
 
 export enum ReportType {

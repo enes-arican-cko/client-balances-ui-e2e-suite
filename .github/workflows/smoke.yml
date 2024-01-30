@@ -1,5 +1,5 @@
 name: 🧪 E2E Smoke Tests
-run-name: Smoke Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
+run-name: E2E Smoke Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
   schedule:
     - cron: "0 6 * * 1-5" #scheduled to run on every weekday at 6 AM

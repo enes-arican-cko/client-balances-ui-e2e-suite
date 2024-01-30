@@ -35,7 +35,6 @@ export class DashboardPage {
             await this.page.getByRole("link", { name: `${targetPage}` }).click();
         }
 
-        await this.page.waitForLoadState()
+        await this.page.waitForLoadState('domcontentloaded');
     }
 }
-

@@ -1,8 +1,10 @@
+import { expect } from '@playwright/test';
 import config from '../../../playwright.config';
 import { logger } from '../../../src/config/logger'
 import test, { page } from "../../../src/fixtures/commonFixtures";
-import { LoginPage } from '../../../src/pages/common/loginPage';
-import { AllReportsPage } from '../../../src/pages/reports/reportsPage';
+import { HomePage } from '../../../src/pages/common/home';
+import { LoginPage } from '../../../src/pages/common/login';
+import { DashboardPages } from '../../../src/pages/dashboard';
 
 test.describe("@smoke @home", () => {
   test.beforeAll("🔐 Login to the Dashboard", async ({ dashboardPage }, testInfo) => {
@@ -12,11 +14,11 @@ test.describe("@smoke @home", () => {
   });
   
   test('Validate basic homepage components', async ({ }) => {
-    logger.info(`✅ Validating all the critical elements on the "All reports" page`);
+    logger.info(`✅ Validating all the critical elements on the ${DashboardPages.HOME} page`);
   
-    const allReportsPage = new AllReportsPage(page);
-    await allReportsPage.validatePresenceOfAllLocators()
-  
+    const homePage = new HomePage(page);
+    await homePage.validatePresenceOfAllLocators()
+    await expect(homePage.page).toHaveScreenshot('home.png', { fullPage: true })
   });
   
   test.afterAll(async ({ browser }) => {
@@ -24,4 +26,3 @@ test.describe("@smoke @home", () => {
   });
 
 })
-

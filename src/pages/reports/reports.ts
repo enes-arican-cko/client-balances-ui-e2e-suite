@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { DashboardPage, DashboardPages } from '../dashboardPage'
+import { DashboardPage, DashboardPages } from '../dashboard'
 
 export class AllReportsPage extends DashboardPage {
   readonly manageSchedulesLinkLocator: Locator;
