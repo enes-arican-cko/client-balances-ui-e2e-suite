@@ -47,7 +47,7 @@ const prodConfig: TestConfig = {
  */
 const customGithubReporterConfig = {
   title: 'Execution Summary',
-  useDetails: true,
+  useDetails: false,
   showError: true
 }
 

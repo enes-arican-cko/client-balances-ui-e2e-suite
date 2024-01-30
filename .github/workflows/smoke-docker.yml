@@ -51,7 +51,7 @@ jobs:
         run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/*" --shard ${{matrix.shard}}
 
       - name: ⬆️ Uploading artifact
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: all-blob-reports
@@ -98,7 +98,7 @@ jobs:
 
       - name: 📑 Upload HTML report
         id: artifact-upload-step
-        uses: actions/upload-artifact@v4.3.0
+        uses: actions/upload-artifact@v3
         with:
           name: html-report-${{ inputs.env == '' && 'sbox' || inputs.env}}_${{ steps.timestampid.outputs.timestamp }}
           path: playwright-report
