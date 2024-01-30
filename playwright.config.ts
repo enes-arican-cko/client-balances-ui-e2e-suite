@@ -5,7 +5,7 @@ import * as sboxTestData from './src/config/sbox.json';
 // Config to accommodate extra properties
 interface TestConfig extends PlaywrightTestConfig {
   env: string,
-  baseUrl: string, 
+  baseUrl: string,
   login: { username: string; password: string; }
 }
 
@@ -42,7 +42,20 @@ const prodConfig: TestConfig = {
   login: qaTestData.login
 };
 
-const defaultConfig:  PlaywrightTestConfig = {
+const customHtmlReportConfig = {
+  testFolder: 'tests',
+  title: 'Dashboard E2E Tests HTML Report',
+  project: 'dashboard-e2e-suite',
+  release: '1.0.0',
+  testEnvironment: environment,
+  outputFolder: 'custom-html-report',
+  embedAssets: true,
+  embedAttachments: true,
+  minifyAssets: true,
+  startServer: true
+}
+
+const defaultConfig: PlaywrightTestConfig = {
   testDir: './tests',
   testMatch: '/*.spec.ts',
   /* Run tests in files in parallel */
@@ -54,18 +67,8 @@ const defaultConfig:  PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 10 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI ? 'blob' : [ ['html'], ['playwright-html', { 
-    testFolder: 'tests',
-    title: 'Dashboard E2E Tests HTML Report',
-    project: 'Project X',
-    release: '1.0.0',
-    testEnvironment: 'SBOX',
-    embedAssets: true,
-    embedAttachments: true,
-    outputFolder: 'custom-html-report',
-    minifyAssets: true,
-    startServer: true,
-  }]], 
+  reporter: process.env.CI ? [['blob'], ['github'], ['playwright-html', customHtmlReportConfig]] :
+    [['html', { open: 'never' }], ['list'], ['playwright-html', customHtmlReportConfig]],
 
   /* Global setup definition*/
   //globalSetup: require.resolve('./src/config/setup/global-setup.ts'),
@@ -75,10 +78,8 @@ const defaultConfig:  PlaywrightTestConfig = {
     // storageState: 'state.json',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    video: {
-      mode: 'on'
-    },
-    screenshot: 'on'
+    video: 'on-first-retry',
+    screenshot: 'only-on-failure'
   },
 
   /* Configure projects for major browsers */
