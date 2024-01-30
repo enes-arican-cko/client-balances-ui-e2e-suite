@@ -21,8 +21,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
-      matrix:
-        shard: [1/2, 2/2]
+
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v4.1.1
@@ -46,7 +45,7 @@ jobs:
           echo "::endgroup::"
 
       - name: 🚀 Run Playwright tests
-        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:visual --shard ${{matrix.shard}}
+        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:visual
 
       - name: ⬆️ Uploading blob report artifact
         uses: actions/upload-artifact@v3
