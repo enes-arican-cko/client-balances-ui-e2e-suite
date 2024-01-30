@@ -3,7 +3,7 @@ import { chromium } from '@playwright/test';
 import config from '../../../playwright.config';
 import { logger } from '../logger';
 
-
+//TODO: enable this in near future as global option
 async function globalSetup() {
   const browser = await chromium.launch();
   const page = await browser.newPage();

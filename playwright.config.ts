@@ -46,13 +46,12 @@ const customHtmlReportConfig = {
   testFolder: 'tests',
   title: 'Dashboard E2E Tests HTML Report',
   project: 'dashboard-e2e-suite',
-  release: '1.0.0',
   testEnvironment: environment,
   outputFolder: 'custom-html-report',
   embedAssets: true,
   embedAttachments: true,
   minifyAssets: true,
-  startServer: true
+  startServer: false
 }
 
 const defaultConfig: PlaywrightTestConfig = {

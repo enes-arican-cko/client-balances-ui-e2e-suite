@@ -1,23 +1,29 @@
 import config from '../../../../playwright.config';
-import { logger } from '../../../../src/config/logger'
+import { logger } from '../../../../src/config/logger';
 import test, { page } from "../../../../src/fixtures/commonFixtures";
 import { LoginPage } from '../../../../src/pages/common/loginPage';
 import { NewReportPage, ReportType } from '../../../../src/pages/reports/newReportPage';
+import { addCustomAnnotation } from '../../index';
 
 test.describe("@functional @reports", () => {
   test.beforeAll("🔐 Login to the Dashboard", async ({ dashboardPage }, testInfo) => {
+    addCustomAnnotation('🌍 Env', config.env)
     logger.info(`🏃 ${(config.env).toUpperCase()} | RUNNING: "${testInfo.title}" test\n`);
     const loginPage = new LoginPage(dashboardPage.page);
     await loginPage.loginViaForm()
   });
-  
+
   test('Create a successfull payments report', async ({ }) => {
     const newReportPage = new NewReportPage(page);
     await newReportPage.validatePresenceOfAllLocators();
     await newReportPage.generateReport(ReportType.PAYMENTS);
+    
+    addCustomAnnotation('📂 Report Status', 'Generated')
   });
-  
+
   test.afterAll(async ({ browser }) => {
     await browser.close();
+    
+    addCustomAnnotation('⚙️ Teardown', 'Browser closed')
   });
 })
