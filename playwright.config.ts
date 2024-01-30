@@ -42,7 +42,16 @@ const prodConfig: TestConfig = {
   login: qaTestData.login
 };
 
-const customHtmlReportConfig = {
+/**
+ * Custom reporter configurations
+ */
+const customGithubReporterConfig = {
+  title: 'Execution Summary',
+  useDetails: true,
+  showError: true
+}
+
+const customHtmlReporterConfig = {
   testFolder: 'tests',
   title: 'Dashboard E2E Tests HTML Report',
   project: 'dashboard-e2e-suite',
@@ -54,6 +63,9 @@ const customHtmlReportConfig = {
   startServer: false
 }
 
+/**
+ * Default configuration
+ */
 const defaultConfig: PlaywrightTestConfig = {
   testDir: './tests',
   testMatch: '/*.spec.ts',
@@ -66,16 +78,14 @@ const defaultConfig: PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 10 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: process.env.CI ? [['blob'], ['github'], ['playwright-html', customHtmlReportConfig]] :
-    [['html', { open: 'never' }], ['list'], ['playwright-html', customHtmlReportConfig]],
+  reporter: process.env.CI ? [['blob'], ['@estruyf/github-actions-reporter', customGithubReporterConfig], ['playwright-html', customHtmlReporterConfig]] :
+    [['html', { open: 'never' }]],
 
   /* Global setup definition*/
   //globalSetup: require.resolve('./src/config/setup/global-setup.ts'),
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     // baseURL: environment === 'qa' ? qaConfig.baseUrl : environment === 'sbox'? sboxConfig.baseUrl : qaConfig.baseUrl,
     // storageState: 'state.json',
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     video: 'on-first-retry',
     screenshot: 'only-on-failure'
