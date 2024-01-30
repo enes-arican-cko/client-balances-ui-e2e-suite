@@ -1,4 +1,4 @@
-name: 🧪 Visual Smoke Tests
+name: 🔎 Visual Smoke Tests
 run-name: Visual Smoke Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
   schedule:
@@ -56,18 +56,10 @@ jobs:
           path: blob-report/
           retention-days: 1
 
-      - name: ⬆️ Uploading custom HTML report artifact
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: custom-html-report
-          path: custom-html-report/
-          retention-days: 3
-
   merge-reports-and-upload:
     name: 🗒️ Publish Test Report
     if: always()
-    needs: [smoke-tests]
+    needs: [visual-smoke-tests]
     runs-on: ubuntu-latest
     outputs:
       timestamp: ${{ steps.timestampid.outputs.timestamp }}
