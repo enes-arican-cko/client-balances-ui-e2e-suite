@@ -1,4 +1,4 @@
-name: 🧪 E2E Smoke Tests (Docker)
+name: 💨 Smoke Tests (e2e | Docker)
 run-name: E2E Smoke Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
   schedule:
@@ -16,15 +16,14 @@ on:
 
 jobs:
   smoke-tests:
-    name: 🧪 Smoke Test
+    name: 💨 Smoke Test
     timeout-minutes: 10
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.41.1-jammy
     strategy:
       fail-fast: false
-      matrix:
-        shard: [1/2, 2/2]
+
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v4.1.1
@@ -47,8 +46,8 @@ jobs:
           # NOTE: browser version mentioned below should match the docker image version mentioned above: "container > image"
           PLAYWRIGHT_BROWSERS_PATH: /usr/lib/playwright npm install playwright-chromium@1.41.0 
 
-      - name: 🚀 Run Playwright tests
-        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/e2e/*" --shard ${{matrix.shard}}
+      - name: 🤖 Run Playwright tests
+        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/e2e/*"
 
       - name: ⬆️ Uploading artifact
         uses: actions/upload-artifact@v3

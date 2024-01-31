@@ -1,5 +1,5 @@
-name: 🔎 Visual Smoke Tests
-run-name: Visual Smoke Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
+name: 🔎 Visual Tests
+run-name: Visual Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
   schedule:
     - cron: "0 6 * * 1-5" #scheduled to run on every weekday at 6 AM
@@ -15,8 +15,8 @@ on:
           - "sbox"
 jobs:
 
-  visual-smoke-tests:
-    name: 🔎 Visual Smoke Test
+  visual-tests:
+    name: 🔎 Visual Test
     timeout-minutes: 10
     runs-on: ubuntu-22.04
     strategy:
@@ -44,7 +44,7 @@ jobs:
           npx playwright install --with-deps chromium
           echo "::endgroup::"
 
-      - name: 🚀 Run Playwright tests
+      - name: 🤖 Run Playwright tests
         run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:visual
 
       - name: ⬆️ Uploading blob report artifact
@@ -58,7 +58,7 @@ jobs:
   merge-reports-and-upload:
     name: 🗒️ Publish Test Report
     if: always()
-    needs: [visual-smoke-tests]
+    needs: [visual-tests]
     runs-on: ubuntu-latest
     outputs:
       timestamp: ${{ steps.timestampid.outputs.timestamp }}

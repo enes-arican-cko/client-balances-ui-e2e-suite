@@ -1,4 +1,4 @@
-name: 🧪 E2E Smoke Tests
+name: 💨 Smoke Tests (e2e)
 run-name: E2E Smoke Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
   schedule:
@@ -14,15 +14,13 @@ on:
           - "qa"
           - "sbox"
 jobs:
-
   smoke-tests:
-    name: 🧪 Smoke Test
+    name: 💨 Smoke Test
     timeout-minutes: 10
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
-      matrix:
-        shard: [1/2, 2/2]
+
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v4.1.1
@@ -45,8 +43,8 @@ jobs:
           npx playwright install --with-deps chromium
           echo "::endgroup::"
 
-      - name: 🚀 Run Playwright tests
-        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/e2e/*" --shard ${{matrix.shard}}
+      - name: 🤖 Run Playwright tests
+        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/e2e/*"
 
       - name: ⬆️ Uploading blob report artifact
         uses: actions/upload-artifact@v3

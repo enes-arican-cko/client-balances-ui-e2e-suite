@@ -23,5 +23,4 @@ test.describe("@smoke @home", () => {
   test.afterAll(async ({ browser }) => {
     await browser.close();
   });
-
 })
