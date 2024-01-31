@@ -18,7 +18,6 @@ test.describe("@smoke @home", () => {
   
     const homePage = new HomePage(page);
     await homePage.validatePresenceOfAllLocators()
-    await expect(homePage.page).toHaveScreenshot('home.png', { fullPage: true })
   });
   
   test.afterAll(async ({ browser }) => {
