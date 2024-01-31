@@ -5,9 +5,11 @@ import test, { page } from "../../../src/fixtures/commonFixtures";
 import { HomePage } from '../../../src/pages/common/home';
 import { LoginPage } from '../../../src/pages/common/login';
 import { DashboardPages } from '../../../src/pages/dashboard';
+import { addCustomAnnotation } from '../index'
 
 test.describe("@smoke @home", () => {
   test.beforeAll("🔐 Login to the Dashboard", async ({ dashboardPage }, testInfo) => {
+    addCustomAnnotation('🌍 Env', config.env)
     logger.info(`🏃 ${(config.env).toUpperCase()} | RUNNING: "${testInfo.title}" test\n`);
     const loginPage = new LoginPage(dashboardPage.page);
     await loginPage.loginViaForm()
@@ -22,5 +24,7 @@ test.describe("@smoke @home", () => {
   
   test.afterAll(async ({ browser }) => {
     await browser.close();
+
+    addCustomAnnotation('⚙️ Teardown', 'Browser closed')
   });
 })
