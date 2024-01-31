@@ -20,8 +20,6 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     uses: docker://mcr.microsoft.com/playwright:v1.41.1-jammy
-    with: 
-      args: npx playwright test
 
     strategy:
       fail-fast: false
