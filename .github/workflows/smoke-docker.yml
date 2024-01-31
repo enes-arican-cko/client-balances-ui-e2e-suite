@@ -45,9 +45,13 @@ jobs:
           # NOTE: browser version mentioned below should match the docker image version mentioned above: "container > image"
           PLAYWRIGHT_BROWSERS_PATH: /usr/lib/playwright npm install playwright-chromium@1.41.0 
 
+      # - name: 🤖 Run Playwright tests
+      #   run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/e2e/*"
+
       - name: 🤖 Run Playwright tests
         uses: docker://mcr.microsoft.com/playwright:v1.41.1-jammy
-        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/e2e/*"
+        with: 
+          args: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/e2e/*"
 
       - name: ⬆️ Uploading artifact
         uses: actions/upload-artifact@v3
