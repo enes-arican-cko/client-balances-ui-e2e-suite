@@ -17,6 +17,8 @@ test.describe(tags, () => {
   
   test(`Visually compare ${DashboardPages.HOME} page components`, async ({ }) => {  
     const homePage = new HomePage(page);
+
+    logger.info(`Performing pixel comparison on ${DashboardPages.HOME} page components`)
     expect(await homePage.page.screenshot({fullPage: true})).toMatchSnapshot('home.png')
   });
 
