@@ -37,4 +37,11 @@ export class DashboardPage {
 
         await this.page.waitForLoadState('domcontentloaded');
     }
+
+    /**
+     * @param page 
+     */
+    async validateCriticalComponents(page:DashboardPages) {
+        logger.info(`✅ Validating critical components on the ${page} page`);
+    }
 }

@@ -6,14 +6,16 @@ import { HomePage } from '../../src/pages/common/home';
 import { LoginPage } from '../../src/pages/common/login';
 import { DashboardPages } from '../../src/pages/dashboard';
 
-test.describe("@visual @home", () => {
+const tags = '@visual @home'
+
+test.describe(tags, () => {
   test.beforeAll("🔐 Login to the Dashboard", async ({ dashboardPage }, testInfo) => {
     logger.info(`🏃 ${(config.env).toUpperCase()} | RUNNING: "${testInfo.title}" test\n`);
     const loginPage = new LoginPage(dashboardPage.page);
     await loginPage.loginViaForm()
   });
   
-  test(`Performing pixel level visual comparison on ${DashboardPages.HOME}`, async ({ }) => {  
+  test(`Visually compare ${DashboardPages.HOME} page components`, async ({ }) => {  
     const homePage = new HomePage(page);
     expect(await homePage.page.screenshot({fullPage: true})).toMatchSnapshot('home.png')
   });
@@ -21,5 +23,4 @@ test.describe("@visual @home", () => {
   test.afterAll(async ({ browser }) => {
     await browser.close();
   });
-
 })

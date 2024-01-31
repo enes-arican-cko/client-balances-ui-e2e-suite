@@ -2,7 +2,6 @@
 
 import { Locator, Page, expect } from "@playwright/test";
 import { DashboardPage, DashboardPages } from "../dashboard";
-import { logger } from "../../config/logger";
 
 export class HomePage extends DashboardPage {
     readonly accountSelectorLocator: Locator;
@@ -60,8 +59,8 @@ export class HomePage extends DashboardPage {
        
     }
 
-    async validatePresenceOfAllLocators() {
-        logger.info(`✅ Validating presence of all locators on the: "${DashboardPages.HOME}" page`)
+    async validateCriticalComponents() {
+        super.validateCriticalComponents(DashboardPages.HOME);
         
         await expect(this.accountSelectorLocator).toBeVisible()
         await expect(this.navIconSupportLocator).toBeVisible()

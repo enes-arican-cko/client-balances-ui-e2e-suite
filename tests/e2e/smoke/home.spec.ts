@@ -1,13 +1,13 @@
-import { expect } from '@playwright/test';
 import config from '../../../playwright.config';
 import { logger } from '../../../src/config/logger'
 import test, { page } from "../../../src/fixtures/commonFixtures";
 import { HomePage } from '../../../src/pages/common/home';
 import { LoginPage } from '../../../src/pages/common/login';
-import { DashboardPages } from '../../../src/pages/dashboard';
 import { addCustomAnnotation } from '../index'
 
-test.describe("@smoke @home", () => {
+const tags = '@smoke, @home'
+
+test.describe(tags, () => {
   test.beforeAll("🔐 Login to the Dashboard", async ({ dashboardPage }, testInfo) => {
     addCustomAnnotation('🌍 Env', config.env)
     logger.info(`🏃 ${(config.env).toUpperCase()} | RUNNING: "${testInfo.title}" test\n`);
@@ -15,11 +15,9 @@ test.describe("@smoke @home", () => {
     await loginPage.loginViaForm()
   });
   
-  test('Validate basic homepage components', async ({ }) => {
-    logger.info(`✅ Validating all the critical elements on the ${DashboardPages.HOME} page`);
-  
+  test('Validate critical homepage components', async ({ }) => {  
     const homePage = new HomePage(page);
-    await homePage.validatePresenceOfAllLocators()
+    await homePage.validateCriticalComponents()
   });
   
   test.afterAll(async ({ browser }) => {

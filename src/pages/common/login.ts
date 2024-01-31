@@ -19,7 +19,6 @@ export class LoginPage extends DashboardPage {
     }
 
     async populateLoginForm() {
-        logger.info(`✅ Populating the login form`)
         await this.usernameLocator.clear()
         await this.usernameLocator.fill(`${config.login.username}`)
         await this.continueBtnLocator.click()

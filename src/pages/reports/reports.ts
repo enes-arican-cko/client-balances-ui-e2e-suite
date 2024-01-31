@@ -20,7 +20,8 @@ export class AllReportsPage extends DashboardPage {
     this.reportsTableFirstRowLocator = this.page.getByRole('cell', { name: 'Payments' }).first();
   }
 
-  async validatePresenceOfAllLocators() {
+  async validateCriticalComponents(page=DashboardPages.REPORTS) {
+    super.validateCriticalComponents(page);
     await this.manageSchedulesLinkLocator.focus()
     
     await expect.soft(this.manageSchedulesLinkLocator).toBeVisible();

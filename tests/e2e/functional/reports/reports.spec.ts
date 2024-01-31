@@ -5,7 +5,9 @@ import { LoginPage } from '../../../../src/pages/common/login';
 import { NewReportPage, ReportType } from '../../../../src/pages/reports/newReport';
 import { addCustomAnnotation } from '../../index';
 
-test.describe("@functional @reports", () => {
+const tags = '@functional @reports'
+
+test.describe(tags, () => {
   test.beforeAll("🔐 Login to the Dashboard", async ({ dashboardPage }, testInfo) => {
     addCustomAnnotation('🌍 Env', config.env)
     logger.info(`🏃 ${(config.env).toUpperCase()} | RUNNING: "${testInfo.title}" test\n`);
@@ -15,7 +17,7 @@ test.describe("@functional @reports", () => {
 
   test('Create a successfull payments report', async ({ }) => {
     const newReportPage = new NewReportPage(page);
-    await newReportPage.validatePresenceOfAllLocators();
+    await newReportPage.validateCriticalComponents();
     await newReportPage.generateReport(ReportType.PAYMENTS);
     
     addCustomAnnotation('📂 Report Status', 'Generated')

@@ -39,8 +39,8 @@ export class NewReportPage extends AllReportsPage {
     this.selectDefaultBtnLocator = this.page.getByTestId('select-default');
   }
 
-  async validatePresenceOfAllLocators() {
-    logger.info(`✅ Validating all locators`);
+  async validateCriticalComponents() {
+    super.validateCriticalComponents(DashboardPages.NEW_REPORT);
 
     await this.headingTextLocator.focus()
     await expect.soft(this.generateReportBtnLocator).toBeVisible();
@@ -54,12 +54,13 @@ export class NewReportPage extends AllReportsPage {
     await expect.soft(this.fileNameInputLocator).toBeVisible();
     await expect.soft(this.dataFreshnessNotificationLocator).toBeVisible();
     await expect.soft(this.includedFieldsSectionLocator).toBeVisible();
-    await expect.soft(this.selectDefaultBtnLocator).toBeDisabled;
+    expect.soft(this.selectDefaultBtnLocator).toBeDisabled;
   }
 
   async generateReport(reportType: ReportType) {
     logger.info(`✅ Creating new ${reportType} report`);
 
+    //TODO: enable the below code to support report type selection
     // await this.reportTypeLocator.click();
     // await this.page.selectOption("#report-type", reportType)
     // expect(this.reportTypeLocator).toBe(reportType);
