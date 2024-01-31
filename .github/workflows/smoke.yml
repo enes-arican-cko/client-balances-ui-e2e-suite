@@ -46,7 +46,7 @@ jobs:
           echo "::endgroup::"
 
       - name: 🚀 Run Playwright tests
-        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/*" --shard ${{matrix.shard}}
+        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/e2e/*" --shard ${{matrix.shard}}
 
       - name: ⬆️ Uploading blob report artifact
         uses: actions/upload-artifact@v3
