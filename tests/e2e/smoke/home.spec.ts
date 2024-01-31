@@ -5,7 +5,7 @@ import { HomePage } from '../../../src/pages/common/home';
 import { LoginPage } from '../../../src/pages/common/login';
 import { addCustomAnnotation } from '../index'
 
-const tags = '@smoke, @home'
+const tags = '@smoke @home'
 
 test.describe(tags, () => {
   test.beforeAll("🔐 Login to the Dashboard", async ({ dashboardPage }, testInfo) => {
