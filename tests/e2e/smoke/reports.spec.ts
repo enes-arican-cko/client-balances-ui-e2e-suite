@@ -16,13 +16,6 @@ test.describe(tags, () => {
   });
 
   test('Validate critical report page components', async ({ }) => {
-    let regex = '/[^a-zA-Z ]/g';
-    let testTitle =  test.info().title;
-    logger.info(`BEFORE TITLE: ${testTitle}`);
-    test.info().title = testTitle.replace(regex, "");
-    logger.info(`AFTER TITLE: ${test.info().title}`);
-
-
     const allReportsPage = new AllReportsPage(page);
     await allReportsPage.validateCriticalComponents();
   });
