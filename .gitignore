@@ -136,3 +136,4 @@ dist
 .history/
 sample.spec.ts
 custom-html-report
+.vscode/settings.json

@@ -26,25 +26,26 @@ jobs:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v4.1.1
 
-      - name: ⚙️ Setup node
+      - name: 🏗️ Setup node
         uses: actions/setup-node@v4.0.1
         with:
-          node-version: 18
+          node-version-file: '.nvmrc'
+          cache: 'npm'
 
-      - name: ⚙️ Install dependencies
+      - name: ⚡ Install dependencies
         run: |
           echo "::group::npm install"
           npm ci
           echo "::endgroup::"
 
-      - name: ⚙️ Install Playwright Browsers
+      - name: ⚡ Install Playwright Browsers
         run: |
           echo "::group::npx playwright install chromium"
           echo "Using Playwright $(npx playwright --version)" && echo "*******************************"
           npx playwright install --with-deps chromium
           echo "::endgroup::"
 
-      - name: 🤖 Run Playwright tests
+      - name: 🎭 Run Playwright tests
         run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:visual
 
       - name: ⬆️ Uploading blob report artifact
@@ -56,7 +57,7 @@ jobs:
           retention-days: 1
 
   merge-reports-and-upload:
-    name: 🗒️ Publish Test Report
+    name: 📊 Publish Test Report
     if: always()
     needs: [visual-tests]
     runs-on: ubuntu-latest
@@ -66,23 +67,23 @@ jobs:
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v4.1.1
-  
-      - name: ⚙️ Setup node
+
+      - name: 🏗️ Setup node
         uses: actions/setup-node@v4.0.1
         with:
           node-version: 18
-      
-      - name: ⚙️ Install dependencies
+
+      - name: ⚡ Install dependencies
         run: |
           echo "::group::npm install"
           npm ci
           echo "::endgroup::"
 
-      - name: ⚙️ Set a timestamp
+      - name: ⏱️ Set a timestamp
         id: timestampid
         run: echo "timestamp=$(date --utc +%d%m%Y_%H%M%SZ)" >> "$GITHUB_OUTPUT"
 
-       # we now download the reports uploaded previously to merge them and create one single html report
+        # Download the reports uploaded previously to merge them and create a single html report
       - name: ⬇️ Download blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v3
         with:
@@ -93,7 +94,7 @@ jobs:
       - name: 🔄 Merge the reports into a single HTML Report
         run: npx playwright merge-reports --reporter html ./downloaded-blob-reports
 
-      - name: 📑 Upload HTML report
+      - name: 📊 Upload HTML report
         id: artifact-upload-step
         uses: actions/upload-artifact@v3
         with:

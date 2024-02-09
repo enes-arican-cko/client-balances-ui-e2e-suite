@@ -31,12 +31,13 @@ jobs:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v4.1.1
 
-      - name: ⚙️ Setup node
+      - name: 🏗️ Setup node
         uses: actions/setup-node@v4.0.1
         with:
-          node-version: 18
+          node-version-file: '.nvmrc'
+          cache: 'npm'
 
-      - name: ⚙️ Install dependencies
+      - name: ⚡️ Install dependencies
         run: |
           echo "::group::npm clean install"
           npm ci
@@ -49,7 +50,7 @@ jobs:
           # NOTE: browser version mentioned below should match the docker image version mentioned above: "container > image"
           PLAYWRIGHT_BROWSERS_PATH: /usr/lib/playwright npm install playwright-chromium@1.41.0 
 
-      - name: 🤖 Run Playwright tests
+      - name: 🎭 Run Playwright tests
         run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/e2e/*"
 
       - name: ⬆️ Uploading artifact
@@ -61,7 +62,7 @@ jobs:
           retention-days: 1
 
   merge-reports-and-upload:
-    name: 🗒️ Publish Test Report
+    name: 📊 Publish Test Report
     if: always()
     needs: [smoke-tests]
     runs-on: ubuntu-latest
@@ -72,18 +73,18 @@ jobs:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v4.1.1
 
-      - name: ⚙️ Setup node
+      - name: 🏗️ Setup node
         uses: actions/setup-node@v4.0.1
         with:
           node-version: 18
 
-      - name: ⚙️ Install dependencies
+      - name: ⚡️ Install dependencies
         run: |
           echo "::group::npm install"
           npm ci
           echo "::endgroup::"
 
-      - name: ⚙️ Set a timestamp
+      - name: ⏱️ Set a timestamp
         id: timestampid
         run: echo "timestamp=$(date --utc +%d%m%Y_%H%M%SZ)" >> "$GITHUB_OUTPUT"
 
@@ -98,7 +99,7 @@ jobs:
       - name: 🔄 Merge the reports into a single HTML Report
         run: npx playwright merge-reports --reporter html ./downloaded-blob-reports
 
-      - name: 📑 Upload HTML report
+      - name: 📊 Upload HTML report
         id: artifact-upload-step
         uses: actions/upload-artifact@v3
         with:

@@ -13,13 +13,19 @@ on:
         options:
           - "qa"
           - "sbox"
+
 jobs:
   smoke-tests:
-    name: 💨 Smoke Test
+    name: 💨 Smoke Test | ${{ matrix.project }}
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      matrix:
+        include:
+          - project: chromium
+            os: ubuntu-latest
+            cache_dir: ~/.cache/ms-playwright
 
     steps:
       - name: ⬇️ Checkout repository
@@ -28,24 +34,35 @@ jobs:
       - name: 🏗️ Setup node
         uses: actions/setup-node@v4.0.1
         with:
-          node-version-file: '.nvmrc'
-          cache: 'npm'
+          node-version-file: ".nvmrc"
+          cache: "npm"
 
-      - name: ⚡️ Install dependencies
-        run: |
-          echo "::group::npm install"
-          npm ci
-          echo "::endgroup::"
+      - name: ⚡️ Cache NPM dependencies
+        uses: actions/cache@v3
+        id: cache-primes
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
 
-      - name: ⚡️ Install Playwright Browsers
+      - name: ⚡️ Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: ${{ matrix.cache_dir }}
+          key: ${{ runner.os }}-${{ matrix.project }}-pw-${{ hashFiles('**/.playwright-version') }}
+
+      - name: 📥 Install dependencies
+        if: steps.cache-primes.outputs.cache-hit != 'true'
         run: |
-          echo "::group::npx playwright install chromium"
-          echo "Using Playwright $(npx playwright --version)" && echo "*******************************"
-          npx playwright install --with-deps chromium
-          echo "::endgroup::"
+          npm install --save-dev @playwright/test && \
+          npx playwright --version > .github/.playwright-version
+
+      - name: 📥 Install ${{ matrix.project }} with Playwright
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps ${{ matrix.project }}
 
       - name: 🎭 Run Playwright tests
-        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace "tests/e2e/*"
+        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace --project=${{ matrix.project }} "tests/e2e/*"
 
       - name: ⬆ Uploading blob report artifact
         uses: actions/upload-artifact@v3
@@ -74,24 +91,31 @@ jobs:
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v4.1.1
-  
+
       - name: 🏗️ Setup node
         uses: actions/setup-node@v4.0.1
         with:
-          node-version-file: '.nvmrc'
-          cache: 'npm'
-      
-      - name: ⚡️ Install dependencies
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: ⚡️ Cache NPM dependencies
+        uses: actions/cache@v3
+        id: cache-primes
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+
+      - name: 📥 Install dependencies
+        if: steps.cache-primes.outputs.cache-hit != 'true'
         run: |
-          echo "::group::npm install"
-          npm ci
-          echo "::endgroup::"
+          npm install --save-dev @playwright/test && \
+          npx playwright --version > .github/.playwright-version
 
       - name: ⏱️ Set a timestamp
         id: timestampid
         run: echo "timestamp=$(date --utc +%d%m%Y_%H%M%SZ)" >> "$GITHUB_OUTPUT"
 
-       # we now download the reports uploaded previously to merge them and create one single html report
+        # we now download the reports uploaded previously to merge them and create one single html report
       - name: ⬇️ Download blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v3
         with:
