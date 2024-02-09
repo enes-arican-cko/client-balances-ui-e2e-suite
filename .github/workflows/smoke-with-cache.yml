@@ -1,4 +1,4 @@
-name: 💨 Smoke Tests (e2e)
+name: 💨 Smoke Tests (e2e | with dependency caching)
 run-name: E2E Smoke Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
 on:
   schedule:
