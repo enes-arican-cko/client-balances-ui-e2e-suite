@@ -1,15 +1,8 @@
 import { Page } from "@playwright/test";
 import { logger } from "../config/logger";
+import { DashboardPages } from "./common/pages";
 
-export enum DashboardPages {
-    HOME = 'Home',
-    REPORTS = 'Reports',
-    NEW_REPORT = 'New report',
-    MANAGE_SCHEDULES = 'Manage schedules',
-    ANALYTICS = 'Analytics',
-}
-
-export enum LocatorType {
+export const enum LocatorType {
     "LINK" = "link",
     "BUTTON" = "button"
 }
@@ -17,8 +10,10 @@ export enum LocatorType {
 export class DashboardPage {
     private _page: Page
 
-    constructor(page: Page) {
+    constructor(page: Page, pageType?: DashboardPages) {
         this._page = page;
+
+        if (pageType) this.navigateTo(pageType);
     }
 
     //getter for page
@@ -27,9 +22,9 @@ export class DashboardPage {
     }
 
     // navigate to diff supported pages within dashboard
-    async navigateTo(targetPage: DashboardPages, locator = LocatorType.LINK) {
+    async navigateTo(targetPage: DashboardPages, locatorType = LocatorType.LINK) {
         logger.info(`👉 Navigating to the: "${targetPage}" page`)
-        if (locator == LocatorType.BUTTON) {
+        if (locatorType == LocatorType.BUTTON) {
             await this.page.getByRole("button", { name: `${targetPage}` }).click()
         } else {
             await this.page.getByRole("link", { name: `${targetPage}` }).click();
@@ -41,7 +36,7 @@ export class DashboardPage {
     /**
      * @param page 
      */
-    async validateCriticalComponents(page:DashboardPages) {
-        logger.info(`✅ Validating critical components on the ${page} page`);
+    async validateComponents(page: DashboardPages) {
+        logger.info(`✅ Validating UI components on the ${page} page`);
     }
 }

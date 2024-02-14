@@ -1,7 +1,7 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { DashboardPage } from "../dashboard";
 import config from "../../../playwright.config";
 import { logger } from "../../config/logger";
+import { DashboardPage } from "../dashboard";
 
 export class LoginPage extends DashboardPage {
     readonly usernameLocator: Locator;
@@ -33,4 +33,6 @@ export class LoginPage extends DashboardPage {
         await expect(this.page.getByTestId('account-selector-button')).toBeVisible({timeout: 10000});
         await this.page.waitForLoadState('domcontentloaded')
     }
+
+    //TODO: Implement login via okta
 }

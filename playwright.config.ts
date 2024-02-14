@@ -10,7 +10,7 @@ interface TestConfig extends PlaywrightTestConfig {
 }
 
 // get the environment type from command line. If none, set it to qa
-const environment = process.env.TEST_ENV || 'qa';
+const environment = process.env.TEST_ENV || 'QA';
 
 /**
  * |**********************************|
@@ -84,7 +84,7 @@ const defaultConfig: PlaywrightTestConfig = {
   /* Global setup definition*/
   //globalSetup: require.resolve('./src/config/setup/global-setup.ts'),
   use: {
-    // baseURL: environment === 'qa' ? qaConfig.baseUrl : environment === 'sbox'? sboxConfig.baseUrl : qaConfig.baseUrl,
+    // baseURL: environment === 'QA' ? qaConfig.baseUrl : environment === 'SBOX'? sboxConfig.baseUrl : qaConfig.baseUrl,
     // storageState: 'state.json',
     trace: 'on-first-retry',
     video: 'on-first-retry',
@@ -117,7 +117,7 @@ const defaultConfig: PlaywrightTestConfig = {
 // config object with default configuration and environment specific configuration
 const config: TestConfig = {
   ...defaultConfig,
-  ...(environment === 'prod' ? prodConfig : environment === 'sbox' ? sboxConfig : qaConfig)
+  ...(environment === 'PROD' ? prodConfig : environment === 'SBOX' ? sboxConfig : qaConfig)
 };
 
 export default config;

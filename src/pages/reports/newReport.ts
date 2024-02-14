@@ -1,7 +1,8 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { DashboardPages, LocatorType } from '../dashboard'
-import { AllReportsPage } from './reports';
 import { logger } from '../../config/logger';
+import { DashboardPages } from '../common/pages';
+import { LocatorType } from '../dashboard';
+import { AllReportsPage } from './allReports';
 
 export enum ReportType {
   PAYMENTS = "Payments",
@@ -39,8 +40,8 @@ export class NewReportPage extends AllReportsPage {
     this.selectDefaultBtnLocator = this.page.getByTestId('select-default');
   }
 
-  async validateCriticalComponents() {
-    super.validateCriticalComponents(DashboardPages.NEW_REPORT);
+  async validateComponents() {
+    logger.info(`✅ Validating UI components on the ${DashboardPages.NEW_REPORT} page`);
 
     await this.headingTextLocator.focus()
     await expect.soft(this.generateReportBtnLocator).toBeVisible();

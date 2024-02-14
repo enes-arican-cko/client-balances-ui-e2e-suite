@@ -4,20 +4,20 @@
   "description": "",
   "scripts": {
     "test": "npx playwright test",
-    "sbx-test": "TEST_ENV=sbox npm run test",
+    "sbx-test": "TEST_ENV=SBOX npm run test",
     "show-report": "npx playwright show-report",
     "test:ui": "npx playwright test --ui",
-    "sbx-test:ui": "TEST_ENV=sbox npm run test:ui",
+    "sbx-test:ui": "TEST_ENV=SBOX npm run test:ui",
     "test:headed": "npx playwright test --headed",
-    "sbx-test:headed": "TEST_ENV=sbox npm run test:headed",
+    "sbx-test:headed": "TEST_ENV=SBOX npm run test:headed",
     "test:debug": "npx playwright test --debug",
-    "sbx-test:debug": "TEST_ENV=sbox npm run test:debug",
+    "sbx-test:debug": "TEST_ENV=SBOX npm run test:debug",
     "test:trace": "npx playwright test --trace on",
-    "sbx-test:trace": "TEST_ENV=sbox npm run test:trace",
+    "sbx-test:trace": "TEST_ENV=SBOX npm run test:trace",
     "test-with-report": "npx playwright test && npm run show-report",
-    "sbx-test-with-report": "TEST_ENV=sbox npm run test-with-report",
+    "sbx-test-with-report": "TEST_ENV=SBOX npm run test-with-report",
     "test:visual": "npx playwright test 'tests/visual/*'",
-    "sbx-test:visual": "TEST_ENV=sbox npm run test:visual"
+    "sbx-test:visual": "TEST_ENV=SBOX npm run test:visual"
   },
   "repository": {
     "type": "git",

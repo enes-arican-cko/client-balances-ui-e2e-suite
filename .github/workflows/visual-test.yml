@@ -1,22 +1,20 @@
-name: 💨 Smoke Tests (e2e | with dependency caching)
-run-name: E2E Smoke Tests | ${{ inputs.env == '' && 'qa' || inputs.env}}
+name: 🔎 Visual Tests (Daily)
+run-name: Visual Tests | ${{ inputs.env == '' && 'SBOX' || inputs.env}}
 on:
-  schedule:
-    - cron: "0 6 * * 1-5" #scheduled to run on every weekday at 6 AM
   workflow_dispatch:
     inputs:
       env:
         description: "Env"
         required: true
-        default: "sbox"
+        default: "SBOX"
         type: choice
         options:
-          - "qa"
-          - "sbox"
-
+          - "SBOX"
+          - "QA"
 jobs:
-  smoke-tests:
-    name: 💨 Smoke Test | ${{ matrix.project }}
+
+  visual-tests:
+    name: 🔎 Visual Test | ${{ matrix.project }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -34,12 +32,12 @@ jobs:
       - name: 🏗️ Setup node
         uses: actions/setup-node@v4.0.1
         with:
-          node-version-file: ".nvmrc"
-          cache: "npm"
+          node-version-file: '.nvmrc'
+          cache: 'npm'
 
       - name: ⚡️ Cache NPM dependencies
         uses: actions/cache@v3
-        id: cache-primes
+        id: npm-cache
         with:
           path: node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
@@ -52,7 +50,7 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.project }}-pw-${{ hashFiles('**/.playwright-version') }}
 
       - name: 📥 Install dependencies
-        if: steps.cache-primes.outputs.cache-hit != 'true'
+        if: steps.npm-cache.outputs.cache-hit != 'true'
         run: |
           npm install --save-dev @playwright/test && \
           npx playwright --version > .github/.playwright-version
@@ -61,10 +59,12 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps ${{ matrix.project }}
 
-      - name: 🎭 Run Playwright tests
-        run: TEST_ENV=${{ inputs.env == '' && 'sbox' || inputs.env}} npm run test:trace --project=${{ matrix.project }} "tests/e2e/*"
+      - name: 🎭 Run Playwright visual tests
+        run: |
+          echo "Using Playwright $(npx playwright --version)" && echo "*******************************"
+          TEST_ENV=${{ inputs.env == '' && 'SBOX' || inputs.env}} npm run test:visual
 
-      - name: ⬆ Uploading blob report artifact
+      - name: ⬆️ Uploading blob report artifact
         uses: actions/upload-artifact@v3
         if: always()
         with:
@@ -72,18 +72,10 @@ jobs:
           path: blob-report/
           retention-days: 1
 
-      - name: ⬆️ Uploading custom HTML report artifact
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: custom-html-report
-          path: custom-html-report/
-          retention-days: 3
-
   merge-reports-and-upload:
     name: 📊 Publish Test Report
     if: always()
-    needs: [smoke-tests]
+    needs: [visual-tests]
     runs-on: ubuntu-latest
     outputs:
       timestamp: ${{ steps.timestampid.outputs.timestamp }}
@@ -100,22 +92,26 @@ jobs:
 
       - name: ⚡️ Cache NPM dependencies
         uses: actions/cache@v3
-        id: cache-primes
+        id: npm-cache
         with:
           path: node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
 
       - name: 📥 Install dependencies
-        if: steps.cache-primes.outputs.cache-hit != 'true'
+        if: steps.npm-cache.outputs.cache-hit != 'true'
         run: |
           npm install --save-dev @playwright/test && \
           npx playwright --version > .github/.playwright-version
+      
+      - name: 📥 Install ${{ matrix.project }} with Playwright
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps ${{ matrix.project }}
 
       - name: ⏱️ Set a timestamp
         id: timestampid
         run: echo "timestamp=$(date --utc +%d%m%Y_%H%M%SZ)" >> "$GITHUB_OUTPUT"
 
-        # we now download the reports uploaded previously to merge them and create one single html report
+        # Download the reports uploaded previously to merge them and create a single html report
       - name: ⬇️ Download blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v3
         with:
@@ -130,6 +126,6 @@ jobs:
         id: artifact-upload-step
         uses: actions/upload-artifact@v3
         with:
-          name: html-report-${{ inputs.env == '' && 'sbox' || inputs.env}}_${{ steps.timestampid.outputs.timestamp }}
+          name: html-report-${{ inputs.env == '' && 'SBOX' || inputs.env}}_${{ steps.timestampid.outputs.timestamp }}
           path: playwright-report
           retention-days: 7

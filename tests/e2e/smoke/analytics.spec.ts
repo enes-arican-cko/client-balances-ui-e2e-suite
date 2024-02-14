@@ -1,11 +1,11 @@
 import config from '../../../playwright.config';
 import { logger } from '../../../src/config/logger';
-import test, { page } from '../../../src/fixtures/commonFixtures';
+import test, { page } from "../../../src/fixtures/commonFixtures";
+import { DataExplorerPage } from '../../../src/pages/analytics/dataExplorer';
 import { LoginPage } from '../../../src/pages/common/login';
-import { AllReportsPage } from '../../../src/pages/reports/allReports';
 import { addCustomAnnotation } from '../../index';
 
-const tags = '@smoke @reports'
+const tags = '@smoke @analytics'
 
 test.describe(tags, () => {
   test.beforeAll("🔐 Login to the Dashboard", async ({ dashboardPage }, testInfo) => {
@@ -15,13 +15,13 @@ test.describe(tags, () => {
     await loginPage.loginViaForm()
   });
 
-  test('Validate critical report page components', async ({ }) => {
-    const reportsPage = new AllReportsPage(page);
-    await reportsPage.validateComponents();
+  test('Validate Data explorer page components', async ({ }) => {
+    const dataExplorerPage = new DataExplorerPage(page);
+    await dataExplorerPage.validateComponents();
   });
 
   test.afterAll(async ({ browser }) => {
     await browser.close();
-    addCustomAnnotation('⚙️ Teardown', 'Browser closed');
+    addCustomAnnotation('⚙️ Teardown', 'Browser closed')
   });
 })
