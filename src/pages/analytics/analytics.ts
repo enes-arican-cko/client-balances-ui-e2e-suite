@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
-import { DashboardPage } from '../dashboard';
 import { DashboardPages } from '../common/pages';
+import { DashboardPage } from '../dashboard';
 
 export class AnalyticsPage extends DashboardPage {
 
