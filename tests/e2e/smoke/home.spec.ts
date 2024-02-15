@@ -15,7 +15,7 @@ test.describe(tags, () => {
     await loginPage.loginViaForm()
   });
 
-  test('Validate critical homepage components', async ({ }) => {
+  test('Validate home page UI components', async ({ }) => {
     const homePage = new HomePage(page);
     await homePage.validateComponents()
   });

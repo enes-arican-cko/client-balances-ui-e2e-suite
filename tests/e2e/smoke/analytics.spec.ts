@@ -15,7 +15,7 @@ test.describe(tags, () => {
     await loginPage.loginViaForm()
   });
 
-  test('Validate Data explorer page components', async ({ }) => {
+  test('Validate Data explorer page UI components', async ({ }) => {
     const dataExplorerPage = new DataExplorerPage(page);
     await dataExplorerPage.validateComponents();
   });

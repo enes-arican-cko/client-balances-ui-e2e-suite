@@ -1,4 +1,4 @@
-[![💨 Smoke Tests (Daily)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/smoke-test.yml/badge.svg?branch=main)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/smoke-test.yml) | [![🔎 Visual Tests (Daily)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/visual-test.yml/badge.svg?branch=main)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/visual-test.yml)
+[![💨 Smoke Tests (Daily)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/smoke-test.yml/badge.svg?branch=main)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/smoke-test.yml) [![🔎 Visual Tests (Daily)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/visual-test.yml/badge.svg?branch=main)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/visual-test.yml)
 
 # 🚧 Dashboard E2E Suite 🚧 
 
