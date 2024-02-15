@@ -1,4 +1,6 @@
-# 🚧 Dashboard E2E Suite 🚧
+[![💨 Smoke Tests (Daily)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/smoke-test.yml/badge.svg?branch=main)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/smoke-test.yml) | [![🔎 Visual Tests (Daily)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/visual-test.yml/badge.svg?branch=main)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/visual-test.yml)
+
+# 🚧 Dashboard E2E Suite 🚧 
 
 This project is a _WORK IN PROGRESS_ and it aims to serve as an alternative e2e automation framework.
 
@@ -49,4 +51,4 @@ This project is a _WORK IN PROGRESS_ and it aims to serve as an alternative e2e 
 
   - `npm run show-report`
 
-### 🔗 Click [here](https://playwright.dev/docs/test-cli) for more details
+### 🔗 Click [here](https://playwright.dev/docs/test-cli) to know more about available playwright commands

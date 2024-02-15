@@ -30,7 +30,7 @@ export class LoginPage extends DashboardPage {
         await this.populateLoginForm();
         await this.continueBtnLocator.click()
         logger.info(`🎊 Logged in successfully`)
-        await this.page.waitForLoadState('domcontentloaded')
+        await this.page.waitForLoadState('networkidle')
         await expect(this.page.getByTestId('account-selector-button')).toBeVisible({timeout: 10000});
     }
 
