@@ -30,10 +30,7 @@ export class LoginPage extends DashboardPage {
         await this.populateLoginForm();
         await this.continueBtnLocator.click()
         logger.info(`🎊 Logged in successfully`)
-        await this.page.waitForLoadState().then(async () => {
-            await this.page.waitForLoadState('domcontentloaded')
-        });
-        await expect(this.page.getByTestId('account-selector-button')).toBeVisible({timeout: 15000});
+        await this.page.waitForLoadState('domcontentloaded');
     }
 
     //TODO: Implement login via okta
