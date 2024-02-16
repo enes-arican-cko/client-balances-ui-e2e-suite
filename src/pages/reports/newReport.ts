@@ -64,6 +64,6 @@ export class NewReportPage extends AllReportsPage {
     // await this.reportTypeLocator.click();
     // await this.page.selectOption("#report-type", reportType)
     // expect(this.reportTypeLocator).toBe(reportType);
-    await this.generateReportBtnLocator.click()
+    await this.generateReportBtnLocator.dispatchEvent('click');
   }
 }
