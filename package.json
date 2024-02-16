@@ -21,9 +21,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/justin-thomas-cko/dashboard-e2e-suite.git"
+    "url": "git+https://github.com/enes-arican-cko/dashboard-e2e-suite.git"
   },
-  "homepage": "https://github.com/justin-thomas-cko/dashboard-e2e-suite#readme",
+  "homepage": "https://github.com/enes-arican-cko/dashboard-e2e-suite#readme",
   "license": "ISC",
   "devDependencies": {
     "@estruyf/github-actions-reporter": "^1.3.0",
