@@ -61,7 +61,7 @@ export class NewReportPage extends AllReportsPage {
     logger.info(`✅ Creating new ${reportType} report`);
 
     //TODO: enable the below code to support report type selection
-    // await this.reportTypeLocator.click();
+    // await this.reportTypeLocator.dispatchEvent('click');
     // await this.page.selectOption("#report-type", reportType)
     // expect(this.reportTypeLocator).toBe(reportType);
     await this.generateReportBtnLocator.dispatchEvent('click');
