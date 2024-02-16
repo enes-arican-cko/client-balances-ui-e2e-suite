@@ -7,6 +7,7 @@ export enum DashboardPages {
     NEW_REPORT = 'New report',
     MANAGE_SCHEDULES = 'Manage schedules',
     ANALYTICS = 'Analytics',
+    FUNDS = 'Funds'
 }
 
 export enum LocatorType {
