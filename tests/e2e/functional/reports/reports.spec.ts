@@ -1,19 +1,12 @@
-import config from '../../../../playwright.config';
-import { logger } from '../../../../src/config/logger';
+import { addCustomAnnotation } from '../../utils/tools';
 import test, { page } from "../../../../src/fixtures/commonFixtures";
-import { LoginPage } from '../../../../src/pages/common/login';
+import { runPreTestSetup, runPostTestTeardown } from '../../utils/test-setup';
 import { NewReportPage, ReportType } from '../../../../src/pages/reports/newReport';
-import { addCustomAnnotation } from '../../utils/index';
 
 const tags = '@functional @reports'
 
 test.describe(tags, () => {
-  test.beforeAll("🔐 Login to the Dashboard", async ({ dashboardPage }, testInfo) => {
-    addCustomAnnotation('🌍 Env', config.env)
-    logger.info(`🏃 ${(config.env).toUpperCase()} | RUNNING: "${testInfo.title}" test\n`);
-    const loginPage = new LoginPage(dashboardPage.page);
-    await loginPage.loginViaForm()
-  });
+  runPreTestSetup();
 
   test('Create a successfull payments report', async ({ }) => {
     const newReportPage = new NewReportPage(page);
@@ -23,9 +16,5 @@ test.describe(tags, () => {
     addCustomAnnotation('📂 Report Status', 'Generated')
   });
 
-  test.afterAll(async ({ browser }) => {
-    await browser.close();
-    
-    addCustomAnnotation('⚙️ Teardown', 'Browser closed')
-  });
+  runPostTestTeardown();
 })
