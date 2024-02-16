@@ -3,7 +3,7 @@ import { logger } from '../../../src/config/logger';
 import test, { page } from '../../../src/fixtures/commonFixtures';
 import { LoginPage } from '../../../src/pages/common/login';
 import { AllReportsPage } from '../../../src/pages/reports/reports';
-import { addCustomAnnotation } from '../index';
+import { addCustomAnnotation } from '../utils/index';
 
 const tags = '@smoke @reports'
 
@@ -20,9 +20,9 @@ test.describe(tags, () => {
     await allReportsPage.validateCriticalComponents();
   });
 
+
   test.afterAll(async ({ browser }) => {
     await browser.close();
-    
     addCustomAnnotation('⚙️ Teardown', 'Browser closed')
   });
 })

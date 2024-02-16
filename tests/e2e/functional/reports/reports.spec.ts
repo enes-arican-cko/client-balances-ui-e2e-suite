@@ -3,7 +3,7 @@ import { logger } from '../../../../src/config/logger';
 import test, { page } from "../../../../src/fixtures/commonFixtures";
 import { LoginPage } from '../../../../src/pages/common/login';
 import { NewReportPage, ReportType } from '../../../../src/pages/reports/newReport';
-import { addCustomAnnotation } from '../../index';
+import { addCustomAnnotation } from '../../utils/index';
 
 const tags = '@functional @reports'
 
