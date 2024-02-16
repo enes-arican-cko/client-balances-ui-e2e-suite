@@ -31,9 +31,9 @@ export class DashboardPage {
     async navigateTo(targetPage: DashboardPages, locator = LocatorType.LINK) {
         logger.info(`👉 Navigating to the: "${targetPage}" page`)
         if (locator == LocatorType.BUTTON) {
-            await this.page.getByRole("button", { name: `${targetPage}` }).dispatchEvent('click');
+            await this.page.getByRole("button", { name: `${targetPage}` }).click();
         } else {
-            await this.page.getByRole("link", { name: `${targetPage}` }).dispatchEvent('click');
+            await this.page.getByRole("link", { name: `${targetPage}` }).click();
         }
 
         await this.page.waitForLoadState('domcontentloaded');

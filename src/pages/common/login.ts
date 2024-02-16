@@ -21,16 +21,16 @@ export class LoginPage extends DashboardPage {
     async populateLoginForm() {
         await this.usernameLocator.clear()
         await this.usernameLocator.fill(`${config.login.username}`)
-        await this.continueBtnLocator.dispatchEvent('click');
+        await this.continueBtnLocator.click();
         await this.passwordLocator.fill(`${config.login.password}`)
 
     }
 
     async loginViaForm() {
         await this.populateLoginForm();
-        await this.continueBtnLocator.dispatchEvent('click');
+        await this.continueBtnLocator.click();
         logger.info(`🎊 Logged in successfully`)
-        await expect(this.page.getByTestId('account-selector-button')).toBeVisible({timeout: 10000});
         await this.page.waitForLoadState('domcontentloaded')
+        await expect(this.page.getByTestId('account-selector-button')).toBeVisible({timeout: 10000});
     }
 }
