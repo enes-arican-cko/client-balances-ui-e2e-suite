@@ -8,7 +8,6 @@ type CommonFixtures = {
 
 export let page: Page;
 
-// Extend basic test by providing a "todoPage" fixture.
 const test = base.extend<CommonFixtures>({
     dashboardPage: async ({ browser }, use) => {
         page = await browser.newPage();

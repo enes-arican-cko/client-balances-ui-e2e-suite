@@ -9,7 +9,7 @@ test.describe(tags, () => {
   
   test('Validate critical homepage components', async ({ }) => {  
     const homePage = new HomePage(page);
-    await homePage.validateCriticalComponents()
+    await homePage.validateComponents()
   });
   
   runPostTestTeardown();
