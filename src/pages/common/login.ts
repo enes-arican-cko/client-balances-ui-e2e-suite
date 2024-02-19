@@ -15,11 +15,10 @@ export class LoginPage extends DashboardPage {
     }
 
     async populateLoginForm() {
-        await this.usernameLocator.clear();
-        await this.usernameLocator.fill(`${config.login.username}`);
-        await this.continueBtnLocator.dispatchEvent('click');
-        await this.passwordLocator.fill(`${config.login.password}`);
-
+        await this.loginPageLocator.username.clear();
+        await this.loginPageLocator.username.fill(`${config.login.username}`);
+        await this.loginPageLocator.continueBtn.dispatchEvent('click');
+        await this.loginPageLocator.password.fill(`${config.login.password}`);
     }
 
     async loginViaForm() {

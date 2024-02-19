@@ -1,6 +1,6 @@
-[![💨 Smoke Tests (Daily)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/smoke-test.yml/badge.svg?branch=main)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/smoke-test.yml) [![🔎 Visual Tests (Daily)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/visual-test.yml/badge.svg?branch=main)](https://github.com/justin-thomas-cko/dashboard-e2e-suite/actions/workflows/visual-test.yml)
+[![💨 Smoke Tests (Daily)](https://github.com/enes-arican-cko/client-balances-ui-e2e-suite/actions/workflows/smoke-test.yml/badge.svg?branch=main)](https://github.com/enes-arican-cko/client-balances-ui-e2e-suite/actions/workflows/smoke-test.yml)
 
-# 🚧 Dashboard E2E Suite 🚧 
+# 🚧 Dashboard E2E Suite 🚧
 
 This project is a _WORK IN PROGRESS_ and it aims to serve as an alternative e2e automation framework.
 
@@ -35,7 +35,7 @@ This project is a _WORK IN PROGRESS_ and it aims to serve as an alternative e2e 
   - QA: `npm run test:trace`
   - SBOX: `npm run sbx-test:trace`
 
-     NOTE: _Traces are normally run in a CI env, because locally you can use UI Mode for developing and debugging tests. To run traces locally without using UI Mode, you can force tracing to be on with the above command. To view the trace run the_ `show-report` _command._
+    NOTE: _Traces are normally run in a CI env, because locally you can use UI Mode for developing and debugging tests. To run traces locally without using UI Mode, you can force tracing to be on with the above command. To view the trace run the_ `show-report` _command._
 
 - ### ⚡ Specific test
 

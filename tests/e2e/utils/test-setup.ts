@@ -8,7 +8,7 @@ export function runPreTestSetup() {
   test.beforeAll("🔐 Login to the Dashboard", async ({ dashboardPage }, testInfo) => {
     addCustomAnnotation('🌍 Env', config.env)
     if (testInfo.retry) {
-      logger.info(`\n 🔁 "Test: ${testInfo.title}" failed Retrying ... \n`);
+      logger.info(`🔁 "Test: ${testInfo.title}" failed. Retrying ... \n`);
     }
 
     logger.info(`🏃 ${(config.env).toUpperCase()} | RUNNING: "${testInfo.title}" test\n`);

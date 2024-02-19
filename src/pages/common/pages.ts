@@ -1,5 +1,6 @@
 export const enum DashboardPages {
     HOME = 'Home',
+    FUNDS = 'Funds',
     REPORTS = 'Reports',
     ANALYTICS = 'Analytics',
     ALL_REPORTS = 'All reports',

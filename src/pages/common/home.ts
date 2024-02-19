@@ -2,6 +2,7 @@ import { Page, expect } from "@playwright/test";
 import { HomePageLocators } from "../../locators/home";
 import { DashboardPages } from "./pages";
 import { DashboardPage } from "../dashboard";
+import { time } from "console";
 
 export class HomePage extends DashboardPage {
 
@@ -15,7 +16,7 @@ export class HomePage extends DashboardPage {
     async validateComponents() {
         super.validateComponents(DashboardPages.HOME);
 
-        await expect(this.homePageLocators.accountSelector).toBeVisible();
+        await expect(this.homePageLocators.accountSelector).toBeVisible({timeout:10000});
         await expect(this.homePageLocators.navIconSupport).toBeVisible();
         await expect(this.homePageLocators.navIconUserMenu).toBeVisible();
         await expect(this.homePageLocators.navLinkHome).toBeVisible();

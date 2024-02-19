@@ -24,7 +24,7 @@ export class DashboardPage {
     // navigate to diff supported pages within dashboard
     async navigateTo(targetPage: DashboardPages, locatorType = LocatorType.LINK) {
         logger.info(`👉 Navigating to the: "${targetPage}" page`)
-        if (locator == LocatorType.BUTTON) {
+        if (locatorType == LocatorType.BUTTON) {
             await this.page.getByRole("button", { name: `${targetPage}` }).dispatchEvent('click');
         } else {
             await this.page.getByRole("link", { name: `${targetPage}` }).dispatchEvent('click');
