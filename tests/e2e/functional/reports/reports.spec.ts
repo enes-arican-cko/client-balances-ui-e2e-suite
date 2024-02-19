@@ -1,7 +1,7 @@
 import test, { page } from "../../../../src/fixtures/commonFixtures";
 import { runPreTestSetup, runPostTestTeardown } from '../../utils/test-setup';
 import { NewReportPage, ReportType } from '../../../../src/pages/reports/newReport';
-import { addCustomAnnotation } from '../../index';
+import { addCustomAnnotation } from '../../utils/tools';
 
 const tags = '@functional @reports'
 

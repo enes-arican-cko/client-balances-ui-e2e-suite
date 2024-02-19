@@ -1,6 +1,6 @@
 import { Page, expect } from "@playwright/test";
 import { HomePageLocators } from "../../locators/home";
-import { DashboardPages } from "../common/pages";
+import { DashboardPages } from "./pages";
 import { DashboardPage } from "../dashboard";
 
 export class HomePage extends DashboardPage {

@@ -1,5 +1,5 @@
 import test, { page } from '../../../src/fixtures/commonFixtures';
-import { AllReportsPage } from '../../../src/pages/reports/reports';
+import { AllReportsPage } from '../../../src/pages/reports/allReports';
 import { runPreTestSetup, runPostTestTeardown } from '../utils/test-setup';
 
 const tags = '@smoke @reports'
