@@ -1,0 +1,32 @@
+name: simple test
+run-name: simple test
+on:
+  workflow_dispatch:
+    inputs:
+      codedeploy_deployment_id:
+        description: "The deployment id"
+        required: false
+      lifecycle_event_hook_execution_id:
+        description: "The lifecycle event hook execution id"
+        required: false
+      aws_account_id:
+        description: "The AWS account id"
+        required: false
+      aws_region:
+        description: "The AWS region"
+        required: false
+      assumed_role_name:
+        description: "The assumed role name"
+        required: false  
+
+jobs:
+  simple-test:
+    name: simple test
+    runs-on: ubuntu-latest
+    steps:
+      - name: run a simple test
+        shell: bash
+        run: |
+          echo "Hello World"
+          echo "I am testing"
+        
